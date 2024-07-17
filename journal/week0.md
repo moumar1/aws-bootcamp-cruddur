@@ -3,6 +3,12 @@ Completed tasks: Installed AWS CLI onto GITPOD, technical error in pushing the f
 Sey up Billing, Alarm with SNS topic sent to email once limit = exceeded. 
 
 Good usage of GITPOD CLI. Errors were made but rectified. 
+Enabled security best practices. 
+Review of Well Architected Framework Tool 
+Lucid chart representing the project has been made. This will be attached below: 
+
+
+Enabled AWS Cloudtrail
 
 # Week 0 — Billing and Architecture
 
