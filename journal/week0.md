@@ -5,8 +5,10 @@ Sey up Billing, Alarm with SNS topic sent to email once limit = exceeded.
 Good usage of GITPOD CLI. Errors were made but rectified. 
 Enabled security best practices. 
 Review of Well Architected Framework Tool 
-Lucid chart representing the project has been made. This will be attached below: 
+Lucid chart representing the project has been developed. This will be attached below: 
+![image](https://github.com/user-attachments/assets/9b896932-336c-4b1e-a624-c48073ef89c2)
 
+https://lucid.app/lucidchart/d3614965-a94e-4454-a7af-63c160a6a33d/edit?viewport_loc=-2770%2C-948%2C2994%2C1405%2C0_0&invitationId=inv_e61cc848-6738-4c99-9db1-a510fa146aa6
 
 Enabled AWS Cloudtrail
 
