@@ -1,5 +1,9 @@
 # Week 0 — update to tasks all below
-Completed tasks: Installed AWS CLI onto GITPOD, technical error in pushing the files to save onto GITHUB from GITPOD. This required changes in read & write settings from repo + Gitpodio user settings. 
+Completed tasks: Installed AWS CLI onto GITPOD, technical error in pushing the files to save onto GITHUB from GITPOD. This required changes in read & write settings from repo + Gitpodio user settings.
+Sey up Billing, Alarm with SNS topic sent to email once limit = exceeded. 
+
+Good usage of GITPOD CLI. Errors were made but rectified. 
+
 # Week 0 — Billing and Architecture
 
 ## Getting the AWS CLI Working
