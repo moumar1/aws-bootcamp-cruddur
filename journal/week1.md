@@ -8,3 +8,36 @@ Dockerhub --> container registry for sharing and pushing images to a container r
 Docker for VSCode makes it easy to work with Docker
 
 https://code.visualstudio.com/docs/containers/overview
+
+#### Issues faced & solved
+When installing the ```pip3 install -r requirements.txt``` followed by the command ```python3 -m flask run --host=0.0.0.0 --port=4567``` there is an issue when trying to load the URL 
+
+```sh
+cd backend-flask
+export FRONTEND_URL="*"
+export BACKEND_URL="*"
+python3 -m flask run --host=0.0.0.0 --port=4567
+cd ..
+```
+Issue was fixed when unlocking the port on the port tab. The following needed adding to URL `/api/activities/home` to open the URL returning the json 
+
+#### CRTL+C quits the opened window stops the terminal
+
+### Add docker file initiation 
+```
+FROM python:3.10-slim-buster
+
+WORKDIR /backend-flask
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+ENV FLASK_ENV=development
+
+EXPOSE ${PORT}
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
+```
+#### To remove variables the following command is used `unset BACKEND_URL`
+#### To check if variables are removed you use env | grep Backend --> This should return with nothing as the variables are removed 
