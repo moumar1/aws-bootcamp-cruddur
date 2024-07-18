@@ -41,3 +41,4 @@ CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
 ```
 #### To remove variables the following command is used `unset BACKEND_URL`
 #### To check if variables are removed you use env | grep Backend --> This should return with nothing as the variables are removed 
+#### `git config --global pull.rebase true` fixed the pull / push issue in syncing into git
