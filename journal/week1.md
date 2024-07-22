@@ -51,6 +51,9 @@ CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
       sudo apt update
       sudo apt install -y postgresql-client-13 libpq-dev
 ```
+To connect into Postgres from Terminal, make sure port 5432 is open - this is the correct port for Postgres. 
+enter ``` -Upostgres --host localhost ``` with pass 'Password' to access the port
+Look into postgres commands \l for list \q to quit
 
 #### To install Dynamodb local
 ```
