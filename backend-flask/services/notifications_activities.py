@@ -22,6 +22,5 @@ class NotificationsActivities:
         'created_at': (now - timedelta(days=2)).isoformat()
       }],
     }
-
     ]
     return results
