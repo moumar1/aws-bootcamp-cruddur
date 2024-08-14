@@ -18,3 +18,10 @@ opentelemetry-instrumentation-flask
 opentelemetry-instrumentation-requests
 ```
 enter the following in Terminal ``` pip install -r requirements.txt ```
+
+### Detailed understanding of AWS XRay traces
+This was implemented by intalling XRAY Daemon onto the Docker compose. 
+
+### Installing the Honeycomb.io datasets for capturing the traces onto the platform 
+
+### Instalation of Rollbar - A platform 
