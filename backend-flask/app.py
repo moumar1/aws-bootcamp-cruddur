@@ -1,7 +1,8 @@
 from flask import Flask
-from flask import request
+from flask import request, g
 from flask_cors import CORS, cross_origin
 import os
+import sys
 
 from services.home_activities import *
 from services.notifications_activities import *
@@ -33,10 +34,10 @@ import logging
 from time import strftime
 
 # Rollbar -------
-from flask import got_request_exception
 import os
 import rollbar
 import rollbar.contrib.flask
+from flask import got_request_exception
 
 
 # Configuring Logger to Use CloudWatch
@@ -94,46 +95,22 @@ cors = CORS(
 #    return response
 
 # Rollbar ----------
-
-## XXX hack to make request data work with pyrollbar <= 0.16.3
-def _get_flask_request():
-    print("Getting flask request")
-    from flask import request
-    print("request:", request)
-    return request
-rollbar._get_flask_request = _get_flask_request
-
-def _build_request_data(request):
-    return rollbar._build_werkzeug_request_data(request)
-rollbar._build_request_data = _build_request_data
-## XXX end hack
-
-# def init_rollbar(app):
-#   rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
-#   flask_env = os.getenv('FLASK_ENV')
-#   rollbar.init(
-#       # access token
-#       rollbar_access_token,
-#       # environment name
-#       flask_env,
-#       # server root directory, makes tracebacks prettier
-#       root=os.path.dirname(os.path.realpath(__file__)),
-#       # flask already sets up logging
-#       allow_logging_basic_config=False)
-#   # send exceptions from `app` to rollbar, using flask's signal system.
-#   got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
-#   return rollbar
-
-def init_rollbar(app):
-    rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
-    flask_env = os.getenv('FLASK_ENV')
+#rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
+#def init_rollbar(app):
+with app.app_context():
     rollbar.init(
-        rollbar_access_token,
-        flask_env,
+        # access token
+        'f834806a278342f7ad2ca7d3e17a1380',
+        # environment name - any string, like 'production' or 'development'
+        'flasktest',
+        # server root directory, makes tracebacks prettier
         root=os.path.dirname(os.path.realpath(__file__)),
+        # flask already sets up logging
         allow_logging_basic_config=False)
+
+    # send exceptions from `app` to rollbar, using flask's signal system.
     got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
-    return rollbar
+
 
 # Rollbar test
 @app.route('/rollbar/test')
