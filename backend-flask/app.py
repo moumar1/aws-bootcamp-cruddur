@@ -57,12 +57,12 @@ processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 
 # X-RAY ----------------
-# xray_url = os.getenv("AWS_XRAY_URL")
-# xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
-
-Simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
-provider.add_span_processor(Simple_processor)
+# OTEL - Honeycomb shows within the logs of backend-flask
+# Simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
+# provider.add_span_processor(Simple_processor)
 
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
@@ -73,7 +73,10 @@ app = Flask(__name__)
 #Initialise rollbar app
 #init_rollbar(app)
 
-# XRayMiddleware(app, xray_recorder)
+#Xray -------------
+XRayMiddleware(app, xray_recorder)
+
+
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 
@@ -88,6 +91,7 @@ cors = CORS(
   methods="OPTIONS,GET,HEAD,POST"
 )
 
+# CloudwatchLogs
 # @app.after_request
 #def after_request(response):
 #    timestamp = strftime('[%Y-%b-%d %H:%M]')
