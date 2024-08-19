@@ -57,8 +57,8 @@ processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 
 # X-RAY ----------------
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+#xray_url = os.getenv("AWS_XRAY_URL")
+#xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 # OTEL - Honeycomb shows within the logs of backend-flask
 # Simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
@@ -74,7 +74,7 @@ app = Flask(__name__)
 #init_rollbar(app)
 
 #Xray -------------
-XRayMiddleware(app, xray_recorder)
+#XRayMiddleware(app, xray_recorder)
 
 
 FlaskInstrumentor().instrument_app(app)
