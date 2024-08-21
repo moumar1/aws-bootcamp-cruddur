@@ -1,14 +1,14 @@
 import './HomeFeedPage.css';
 import React from "react";
-import { Auth } from 'aws-amplify';
-import DesktopNavigation  from '../components/DesktopNavigation';
-import DesktopSidebar     from '../components/DesktopSidebar';
+import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth';
+import DesktopNavigation from '../components/DesktopNavigation';
+import DesktopSidebar from '../components/DesktopSidebar';
 import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
 
-// [TODO] Authenication
-import Cookies from 'js-cookie'
+// [TODO] Authentication
+import Cookies from 'js-cookie';
 
 export default function HomeFeedPage() {
   const [activities, setActivities] = React.useState([]);
@@ -17,52 +17,55 @@ export default function HomeFeedPage() {
   const [replyActivity, setReplyActivity] = React.useState({});
   const [user, setUser] = React.useState(null);
   const dataFetchedRef = React.useRef(false);
-  
+
   const loadData = async () => {
     try {
-      const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
+      const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`;
       const res = await fetch(backend_url, {
         method: "GET"
       });
       let resJson = await res.json();
       if (res.status === 200) {
-        setActivities(resJson)
+        setActivities(resJson);
       } else {
-        console.log(res)
+        console.log(res);
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-// check if we are authenicated
-const checkAuth = async () => {
-  Auth.currentAuthenticatedUser({
-    // Optional, By default is false. 
-    // If set to true, this call will send a 
-    // request to Cognito to get the latest user data
-    bypassCache: false 
-  })
-  .then((user) => {
-    console.log('user',user);
-    return Auth.currentAuthenticatedUser()
-  }).then((cognito_user) => {
-      setUser({
-        display_name: cognito_user.attributes.name,
-        handle: cognito_user.attributes.preferred_username
-      })
-  })
-  .catch((err) => console.log(err));
-};
+  // Check if we are authenticated
+  const checkAuth = async () => {
+    try {
+      // Use the new v6 methods to get the current user and session details
+      const { username, signInDetails } = await getCurrentUser();
+      const { tokens: session } = await fetchAuthSession();
 
-  React.useEffect(()=>{
-    //prevents double call
+      // Update the user state with necessary attributes
+      setUser({
+        display_name: signInDetails.name,  // Assuming signInDetails has the name attribute
+        handle: signInDetails.preferred_username, // Assuming signInDetails has the preferred_username attribute
+      });
+
+      console.log('User authenticated:', {
+        username,
+        session,
+        authenticationFlowType: signInDetails.authFlowType
+      });
+    } catch (err) {
+      console.log('Error fetching authenticated user:', err);
+    }
+  };
+
+  React.useEffect(() => {
+    // Prevents double call
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
 
     loadData();
     checkAuth();
-  }, [])
+  }, []);
 
   return (
     <article>

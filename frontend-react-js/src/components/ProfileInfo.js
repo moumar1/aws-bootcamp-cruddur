@@ -3,7 +3,7 @@ import {ReactComponent as ElipsesIcon} from './svg/elipses.svg';
 import React from "react";
 
 // [TODO] Authenication
-import Cookies from 'js-cookie'
+import { signOut } from 'aws-amplify/auth';
 
 export default function ProfileInfo(props) {
   const [popped, setPopped] = React.useState(false);
@@ -11,10 +11,10 @@ export default function ProfileInfo(props) {
   const click_pop = (event) => {
     setPopped(!popped)
   }
-
-  const signOut = async () => {
+  
+  const handleSignOut = async () => {
     try {
-        await Auth.signOut({ global: true });
+        await signOut({ global: true });
         window.location.href = "/"
     } catch (error) {
         console.log('error signing out: ', error);
