@@ -12,10 +12,11 @@ export default function ProfileInfo(props) {
     setPopped(!popped)
   }
   
-  const handleSignOut = async () => {
+  const signOut = async () => {
     try {
-        await signOut({ global: true });
+        await Auth.signOut({ global: true });
         window.location.href = "/"
+        localStorage.removeItem("access_token")
     } catch (error) {
         console.log('error signing out: ', error);
     }
