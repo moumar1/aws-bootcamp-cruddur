@@ -63,8 +63,8 @@ provider.add_span_processor(processor)
 #xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 # OTEL - Honeycomb shows within the logs of backend-flask
-# Simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
-# provider.add_span_processor(Simple_processor)
+#Simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
+#provider.add_span_processor(Simple_processor)
 
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
@@ -82,7 +82,7 @@ app = Flask(__name__)
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 
-cognito_jwt_token = cognitoJwtToken(
+cognito_jwt_token = CognitoJwtToken(
   user_pool_id = os.getenv("AWS_COGNITO_USER_POOL_ID"),
   user_pool_client_id = os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
   region = os.getenv("AWS_DEFAULT_REGION")
