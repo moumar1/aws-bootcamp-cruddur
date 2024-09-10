@@ -14,3 +14,6 @@ blinker
 rollbar
 
 Flask_AWSCognito
+
+psycopg[binary]
+psycopg[pool]
